@@ -14,4 +14,4 @@ This code can define variables, import modules, or run any other Python code
 that you want to execute when the package is imported.
 """
 
-from .. import main
+from . import main

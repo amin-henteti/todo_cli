@@ -55,10 +55,9 @@ def list_todos(priority, todofile):
 @click.command()
 @click.argument(
     "indexes",
-    type=click.Int(),
+    type=int,
     nargs=-1,
     required=True,
-    help="indexes of the todo entries to delete from the list",
 )
 @click.argument("todofile", type=click.Path(exists=False), required=False)
 def delete_todos(indexes, todofile):
@@ -87,15 +86,9 @@ def delete_todos(indexes, todofile):
         f.write("\n".join(todo_list))
 
 
-@click.combine()
-def mycommands():
-    """Combines multiple click commands"""
-    print("running commands")
 
-mycommands.add_command(add_todo)
-mycommands.add_command(delete_todos)
-mycommands.add_command(list_todos)
-
+commands = [add_todo, delete_todos, list_todos]
+cli = click.CommandCollection(sources=commands)
 
 if __name__ == "__main__":
-    mycommands()
+    cli()
