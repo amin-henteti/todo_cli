@@ -12,3 +12,5 @@ Overall, adding an __init__.py file to a test directory is a good practice
 as it makes the test suite more organized and easier to work with.
 
 """
+
+from .. import main
