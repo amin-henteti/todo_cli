@@ -149,3 +149,38 @@ After creating the tag, you can push it to the remote repository using:
 ```git
 git push origin <tag_name>
 ```
+
+## install tree
+tree command is not included by default in Git Bash, but you can install it using the following steps:
+
+> ### Method 1: install
+1. Download the tree executable file for Windows from its official website: http://gnuwin32.sourceforge.net/packages/tree.htm
+
+2. Extract the downloaded ZIP file to a directory, for example, **C:\Program Files\Git\mingw64\bin\tree**.
+
+3. Add the directory containing the tree executable to your PATH environment variable. You can do this by adding the following line to your **~/.bashrc** file (create the file if it doesn't exist):
+
+```bash
+export PATH="/c/Program Files/Git/mingw64/bin/tree:$PATH"
+```
+4. Restart Git Bash, and the tree command should now be available.
+
+> ### Method 2: using Chocolatey
+To install the tree command on git bash and PowerShell, you can use the following steps:
+
+1. Install Chocolatey package manager by following the instructions on the official website: https://chocolatey.org/install
+
+2. Open PowerShell as an administrator.
+
+3. Install the tree command using Chocolatey by running the following command:
+```powershell
+choco install tree
+```
+
+4. Once the installation is complete, you can use the tree command in PowerShell by running:
+```powershell
+tree <directory_path>
+# if want to exclude some folders as they have many suborders or files
+tree <directory_path> -I "<exclude_folder>|<exclude_folder2>"
+
+```

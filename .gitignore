@@ -7,3 +7,6 @@ mytodos.txt
 *pytest*
 settings.json
 *workspace
+*egg-info
+dist
+build
