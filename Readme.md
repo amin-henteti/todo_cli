@@ -71,8 +71,8 @@ python todo.py list_todos --priority "h" --todofile "path/to/todo/file"
 
 ## Contributing
 
-Contributions are welcome! Please see the [contribution guidelines](CONTRIBUTING.md) for details.
+Contributions are welcome! Please see the [contribution guidelines](Extra/CONTRIBUTING.md) for details.
 
 ## License
 
-This project is licensed under the [License](LICENSE).
+This project is licensed under the [License](Extra/LICENSE).
