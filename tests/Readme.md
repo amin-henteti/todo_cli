@@ -6,8 +6,10 @@ How to run tests
 To run the tests, navigate to the tests folder in your terminal and run the following 
 ```bash
 pytest
-# to have more logs
+# view more logs
 pytest -v -s
+# view only failed tests
+pytest -p no:warnings
 ```
 
 ## Manual tests

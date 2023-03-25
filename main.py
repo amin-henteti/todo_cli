@@ -1,5 +1,7 @@
 
 import click
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="pyreadline.py3k_compat")
 
 # Dictionary mapping priority keys to priority names
 PRIORITIES = {"o": "Optional", "l": "Low", "m": "Medium", "h": "High", "c": "Crucial"}
