@@ -1,0 +1,2 @@
+[pylint]
+disable = I1101

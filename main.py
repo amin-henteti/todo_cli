@@ -1,3 +1,5 @@
+# pylint: disable=I1101
+
 import click
 
 # Dictionary mapping priority keys to priority names
@@ -14,8 +16,10 @@ DEFAULT_FILE = "mytodos.txt"
 @click.argument("priority", type=click.Choice(PRIORITIES_LIST), default="m")
 @click.argument("todofile", type=click.Path(exists=False), required=False)
 @click.option("-n", "--name", prompt="Enter the todo name", help="The name of the todo")
-@click.option("-d", "--desc", prompt="Describe the todo", help="The description of the todo task")
-def add_todo (name, desc, priority, todofile):
+@click.option(
+    "-d", "--desc", prompt="Describe the todo", help="The description of the todo task"
+)
+def add_todo(name, desc, priority, todofile):
     """
     Add a new todo to the list.
     :param name: name of the todo
@@ -24,7 +28,7 @@ def add_todo (name, desc, priority, todofile):
     :param todofile: file to store the todos, defaults to 'mytodos.txt'
     """
     filename = todofile if todofile is not None else DEFAULT_FILE
-    with open (filename, "a+", encoding="utf-8") as f:
+    with open(filename, "a+", encoding="utf-8") as f:
         f.write(f"{name}: {desc} [Priority: {PRIORITIES[priority]}]")
 
 
@@ -41,12 +45,20 @@ def list_todos(priority, todofile):
     with open(filename, "r", encoding="utf-8") as f:
         todo_list = f.read().splitlines()
     filter_str = "" if priority is None else f"[Priority: {PRIORITIES[priority]}]"
-    out_list = [f"({i}) - {todo}" for i, todo in enumerate(todo_list) if filter_str in todo]
+    out_list = [
+        f"({i}) - {todo}" for i, todo in enumerate(todo_list) if filter_str in todo
+    ]
     click.echo("\n".join(out_list))
 
 
 @click.command()
-@click.argument("indexes", type=click.Int(), nargs=-1, required=True, help="indexes of the todo entries to delete from the list")
+@click.argument(
+    "indexes",
+    type=click.Int(),
+    nargs=-1,
+    required=True,
+    help="indexes of the todo entries to delete from the list",
+)
 @click.argument("todofile", type=click.Path(exists=False), required=False)
 def delete_todos(indexes, todofile):
     """
@@ -65,7 +77,9 @@ def delete_todos(indexes, todofile):
     # Delete each item in the list one by one, starting from the end
     for index in indexes_sorted:
         if index >= len(todo_list):
-            click.echo(f"Cannot delete the entry {index} because it exceeds the entries that currently exist ({len(todo_list)})")
+            click.echo(
+                f"Cannot delete the entry {index} because it exceeds the entries that currently exist ({len(todo_list)})"
+            )
         else:
             del todo_list[index]
     with open(filename, "w", encoding="utf-8") as f:
@@ -78,6 +92,7 @@ def mycommands():
     This is an example How to use click package to create a professional CLI
     """
     pass
+
 
 mycommands.add_command(add_todo)
 mycommands.add_command(delete_todos)
