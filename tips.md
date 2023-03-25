@@ -182,5 +182,21 @@ choco install tree
 tree <directory_path>
 # if want to exclude some folders as they have many suborders or files
 tree <directory_path> -I "<exclude_folder>|<exclude_folder2>"
+```
 
+## move files
+
+If you want to move a file or a directory without losing the git tracking history, you can use the git mv command instead of the regular mv command.
+
+```bash
+git mv <source> <destination>
+```
+This command will move the file or directory from <source> to <destination> and also tell git to track the move. This means that git will know that the file has been moved and it will preserve the history of the file.
+
+Note that if you move a file or a directory without using git mv, git will not be able to track the move and you will lose the history of the file.
+
+You can also use the same command to rename a folder:
+
+```bash
+git mv old_folder new_folder
 ```
