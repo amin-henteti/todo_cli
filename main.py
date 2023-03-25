@@ -1,4 +1,5 @@
 # pylint: disable=I1101
+# pylint: disable=C0103
 
 import click
 
@@ -86,17 +87,15 @@ def delete_todos(indexes, todofile):
         f.write("\n".join(todo_list))
 
 
-@click.group()
+@click.combine()
 def mycommands():
-    """
-    This is an example How to use click package to create a professional CLI
-    """
-    pass
-
+    """Combines multiple click commands"""
+    print("running commands")
 
 mycommands.add_command(add_todo)
 mycommands.add_command(delete_todos)
 mycommands.add_command(list_todos)
+
 
 if __name__ == "__main__":
     mycommands()
