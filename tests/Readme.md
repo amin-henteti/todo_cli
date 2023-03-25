@@ -10,6 +10,7 @@ pytest
 pytest -v -s
 # view only failed tests
 pytest -p no:warnings
+pytest -W ignore::DeprecationWarning
 ```
 
 ## Manual tests

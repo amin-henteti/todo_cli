@@ -65,7 +65,6 @@ def test_delete_todos_invalid_index():
         with open(filename, "w", encoding="utf-8") as f:
             f.write("Test Todo: This is a test todo [Priority: Medium]\n")
         result = runner.invoke(delete_todos, ["1", filename])
-        print(result.output.lower())
         assert result.exit_code == 0
         assert "cannot delete the entry 1" in result.output.lower()
 
