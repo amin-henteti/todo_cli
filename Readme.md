@@ -7,7 +7,7 @@ This is a command-line interface (CLI) tool for managing a todo list.
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/example/todo_cli.git`
+1. Clone the repository: `git clone https://github.com/amin-henteti/todo_cli.git`
 2. Navigate to the project directory: `cd todo_cli`
 3. Install the required packages: `pip install -r requirements.txt`
 
