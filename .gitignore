@@ -5,3 +5,5 @@ click
 tests/__pycache__
 mytodos.txt
 *pytest*
+settings.json
+*workspace

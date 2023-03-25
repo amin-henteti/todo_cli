@@ -2,7 +2,7 @@
 ## naming convention
 The **add-todo** vs **add_todo** naming difference is due to how Click translates Python function names to command names. By default, ``Click`` will convert *underscores* to *hyphens* and lowercase all letters. So if you define a function named add_todo and you don't specify a custom command name, the command name will be **add-todo**.
 
-In the provided code, the commands were defined with the function names, so you would need to call them with hyphenated names, like python myscript.py **add-todo**. If you want to change the command names to use underscores instead, you can use the name parameter of the click.command decorator, like this:
+If you want to change the command names to use underscores instead, you can use the name parameter of the click.command decorator, like this:
 ```python
 @click.command(name="add_todo")
 def add_todo_func():
@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
 # vscode tips 
 ## open the settings.json file of VSCode
-To open the settings.json file to set some parametes like terminal.integrated.rendererType, follow these steps:
+To open the settings.json file to set some parameters like terminal.integrated.rendererType, follow these steps:
 
 1. Open VSCode
 2. Open the Command Palette by pressing Ctrl+Shift+P on Windows/Linux or Cmd+Shift+P on Mac.
@@ -40,6 +40,34 @@ To open the settings.json file to set some parametes like terminal.integrated.re
 4. Add the following line to the JSON object: "terminal.integrated.rendererType": "dom" (or "canvas" if you prefer the canvas renderer)
 5. Save the settings.json file and close it.
 
+## highlight a line
+when having many sections in a markdown file, the titles of section become very similar to the normal text. Typically when using "###"+ title. 
+
+In order to highlight section we can use >:
+> #### highlighted section
+
+## correct spelling in the code
+``Code Spell Checker `` is an extension that highlights spelling mistakes in the code and allows you to cycle through them with keyboard shortcuts.
+To use it in VS Code, you can follow these steps:
+
+1. Install the extension by going to the Extensions tab in VS Code and searching for "Code Spell Checker". Click Install and then Reload when prompted.
+
+2. Open a file that you want to spell-check.
+
+3. The extension will start highlighting words that it thinks are misspelled. To correct a spelling mistake, you can right-click on the word and select from the suggestions provided.
+
+4. To see a list of all spelling mistakes in your file, you can open the Command Palette (``Ctrl + Shift + P``) and search for "**Code Spell Checker: Show Report**". This will open a new panel that lists all the spelling mistakes in your file.
+
+5. You can navigate through the list of spelling mistakes using the up and down arrow keys, and make changes as needed.
+
+6. Once you've corrected all the spelling mistakes, you can save your file and close the Code Spell Checker report panel.
+
+Note that you can also configure Code Spell Checker to ignore certain words or patterns by adding them to a configuration file. You can access the configuration file by:
+1. open Preferences tab in VS Code 
+2. select "Settings".
+3. search for "Code Spell Checker" 
+4. click "Edit in settings.json". 
+5. In the settings file, you can add an "ignoreWords" or "ignoreRegExp" property to specify words or patterns to ignore.
 # git tips
 ## untrack files & folders in git
 To ignore all files that end with .pyc in Git, you can add the following line to your **.gitignore** file:
@@ -80,3 +108,44 @@ It's worth noting that if you have already pushed the commit to a remote reposit
 git push --force
 ```
 to overwrite the remote branch with the new changes. However, be cautious when using git push --force as it can cause issues for collaborators working on the same branch.
+
+
+## tag a commit
+To tag a commit in Git, you can use the git tag command. Here are the steps:
+
+First, identify the commit you want to tag. You can use the ``git log`` command to view a list of recent commits, along with their commit IDs.
+
+Once you've identified the commit you want to tag, use run:
+
+```
+git tag <tag-name> <commit-ID>
+# example
+git tag v1.0.0 abcdef123456
+```
+This creates a new tag called v1.0.0 that points to the commit with ID abcdef123456.
+
+By default, the tag will be created on your local machine. To push the tag to GitHub, use the git push command with the --tags flag. For example:
+
+```git
+git push --tags
+```
+This will push all local tags to the remote repository, making them available to other users who clone the repository.
+
+To **tag a new commit**, you can use the following command:
+
+```git
+git tag <tag_name>
+```
+This will create a new tag pointing to the current commit.
+
+If you want to include a message with the tag, you can use the -a option:
+
+```git
+git tag -a <tag_name> -m "<message>"
+```
+
+After creating the tag, you can push it to the remote repository using:
+
+```git
+git push origin <tag_name>
+```

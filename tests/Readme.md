@@ -1,6 +1,6 @@
 # How to test
 ## Automated tests
-This folder contains automated tests for the Todo CLI application.
+the `tests` folder contains automated tests for the Todo CLI application.
 
 How to run tests
 To run the tests, navigate to the tests folder in your terminal and run the following 
@@ -14,7 +14,7 @@ pytest -W ignore::DeprecationWarning
 ```
 
 ## Manual tests
-The following manual tests were performed to verify the functionality of the TODO CLI application:
+The following are manual tests that can be performed to verify the functionality of the ``todo_cli`` program:
 
 > ### Test **add_todo** function with valid inputs
 This test case verifies that the **add_todo** function works correctly when given valid input. 
@@ -38,7 +38,7 @@ python -m pytest tests/test_todo.py::test_delete_todos_invalid_index
 
 ## interactive test
 
-Alternatively, you can run the ``click.testing.CliRunner().invoke(list_todos)`` command directly in the *Python interactive shell* by launching the shell in the same irectory as where the file that contain list_todos function. Just type the command after importing the necessary modules and functions
+Alternatively, you can run the ``click.testing.CliRunner().invoke(list_todos)`` command directly in the *Python interactive shell* by launching the shell in the same directory as where the file that contain list_todos function. Just type the command after importing the necessary modules and functions
 ```python
 >>> import click
 >>> from main import list_todos
