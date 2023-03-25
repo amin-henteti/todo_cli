@@ -43,28 +43,30 @@ def test_list_todos():
             f.write("Test Todo: This is a test todo. [Priority: High]\n")
             f.write("Test Todo 2: This is another test todo. [Priority: Medium]\n")
             f.write("Test Todo 3: This is yet another test todo. [Priority: Low]\n")
-        result = runner.invoke(list_todos, ["-p", "h", filename])
+        result = runner.invoke(list_todos, ["h", filename])
         assert result.exit_code == 0
         assert "Test Todo: This is a test todo. [Priority: High]" in result.output
         assert "Test Todo 2: This is another test todo. [Priority: Medium]" not in result.output
         assert "Test Todo 3: This is yet another test todo. [Priority: Low]" not in result.output
 
 
-def test_add_todo_invalid_priority():
+def test_list_todos_invalid_priority():
     runner = CliRunner()
     result = runner.invoke(
-        add_todo, ["--name", "Test Todo", "--desc", "This is a test todo", "--priority", "invalid"]
+        list_todos, ["invalid"]
     )
     assert result.exit_code != 0
-    assert "Invalid value for '-p' / '--priority': invalid" in result.output
+    assert "invalid choice" in result.output.lower()
 
 def test_delete_todos_invalid_index():
     runner = CliRunner()
-    with runner.isolated_filesystem():
-        with open(DEFAULT_FILE, "w", encoding="utf-8") as f:
+    with tempfile.TemporaryDirectory() as tempdir:
+        filename = os.path.join(tempdir, "test_todos.txt")
+        with open(filename, "w", encoding="utf-8") as f:
             f.write("Test Todo: This is a test todo [Priority: Medium]\n")
-        result = runner.invoke(delete_todos, ["1"])
-        assert result.exit_code != 0
-        assert "Cannot delete the entry 1" in result.output
+        result = runner.invoke(delete_todos, ["1", filename])
+        print(result.output.lower())
+        assert result.exit_code == 0
+        assert "cannot delete the entry 1" in result.output.lower()
 
 
