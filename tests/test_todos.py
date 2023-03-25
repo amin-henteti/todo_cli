@@ -2,7 +2,7 @@ import os
 import tempfile
 import pytest
 from click.testing import CliRunner
-from main import DEFAULT_FILE, add_todo, list_todos, delete_todos
+from ..main import DEFAULT_FILE, add_todo, list_todos, delete_todos
 
 
 def test_add_todo():
