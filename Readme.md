@@ -1,14 +1,14 @@
 # Todo List CLI
 
 This is a command-line interface (CLI) tool for managing a todo list. 
-- add_todo: Add a new todo to the list.
-- delete_todos: Delete the specified todo entries from the list.
-- list_todos: List all the todos in the file, optionally filtering by priority.
+- **add_todo**: Add a new todo to the list.
+- **delete_todos**: Delete the specified todo entries from the list.
+- **list_todos**: List all the todos in the file, optionally filtering by priority.
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/example/todo-cli.git`
-2. Navigate to the project directory: `cd todo-cli`
+1. Clone the repository: `git clone https://github.com/example/todo_cli.git`
+2. Navigate to the project directory: `cd todo_cli`
 3. Install the required packages: `pip install -r requirements.txt`
 
 ## Usage
@@ -16,46 +16,63 @@ This is a command-line interface (CLI) tool for managing a todo list.
 The CLI tool provides the following commands:
 
 ### Add a new todo item
-
-
-
-# test cases
-## Test add_todo function with valid inputs:
-```python
->>> with open(DEFAULT_FILE, "w", encoding="utf-8") as f:
-...     f.write("Test Todo: This is a test todo [Priority: Medium]\n")
->>> result = click.testing.CliRunner().invoke(list_todos)
->>> assert result.exit_code == 0
->>> assert "(0) - Test Todo: This is a test todo [Priority: Medium]" in result.output
+```bash
+python todo.py add-todo [-n NAME] [-d DESC] [-p PRIORITY] [-f FILE]
 ```
 
-## Test delete_todos function with valid inputs:
+* `-n/--name`: The name of the todo item (required).
+* `-d/--desc`: The description of the todo item (required).
+* `-p/--priority`: The priority of the todo item. Defaults to `m`. It value can be one of: 
+    - `o` (optional)
+    - `l` (low)
+    - `m` (medium)
+    - `h` (high)
+    - `c` (crucial).
+* `-f/--file`: The file to store the todos. Defaults to `mytodos.txt`.
 
-```python
->>> with open(DEFAULT_FILE, "w", encoding="utf-8") as f:
-...     f.write("Test Todo: This is a test todo [Priority: Medium]\n")
->>> result = click.testing.CliRunner().invoke(delete_todos, ["0"])
->>> assert result.exit_code == 0
->>> with open(DEFAULT_FILE, "r", encoding="utf-8") as f:
-...     contents = f.read()
->>> assert contents == ""
+Example: To add a new todo to the list, run the following command:
+
+```bash
+python todo.py add_todo --name "Todo name" --desc "Todo description" --priority "h" --todofile "path/to/todo/file"
 ```
 
-## Test add_todo function with invalid priority input:
-```python
->>> result = click.testing.CliRunner().invoke(
-...     add_todo, ["--name", "Test Todo", "--desc", "This is a test todo", "--priority", "invalid"]
-... )
->>> assert result.exit_code != 0
->>> assert "Invalid value for '-p' / '--priority': invalid" in result.output
+### Delete todo items
+
+```bash
+python todo.py delete-todos INDEX [INDEX ...] [-f FILE]
 ```
 
-## Test delete_todos function with invalid index input:
+
+* `INDEX`: The index of the todo item to delete (required).
+* `-f/--file`: The file to read the todos from. Defaults to `mytodos.txt`.
+
+Example: To delete one or more todos from the list, run the following command:
+
 ```python
->>> with open(DEFAULT_FILE, "w", encoding="utf-8") as f:
-...     f.write("Test Todo: This is a test todo [Priority: Medium]\n")
->>> result = click.testing.CliRunner().invoke(delete_todos, ["1"])
->>> assert result.exit_code != 0
->>> assert "Cannot delete the entry 1" in result.output
+todo.py delete_todos "index1" "index2" ... --todofile "path/to/todo/file"
+```
 
 
+### List all todo items
+
+```bash 
+python todo.py list-todos [-p PRIORITY] [-f FILE]
+```
+
+
+* `-p/--priority`: The priority to filter by.
+* `-f/--file`: The file to read the todos from. Defaults to `mytodos.txt`.
+
+Example: To list all the todos in the file, run the following command:
+
+```bash
+python todo.py list_todos --priority "h" --todofile "path/to/todo/file"
+```
+
+## Contributing
+
+Contributions are welcome! Please see the [contribution guidelines](CONTRIBUTING.md) for details.
+
+## License
+
+This project is licensed under the [License](LICENSE).
