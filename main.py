@@ -1,10 +1,8 @@
-# pylint: disable=I1101
-# pylint: disable=C0103
 
 import click
 
 # Dictionary mapping priority keys to priority names
-PRIORITIES = {"o": "Optional", "2": "Low", "m": "Medium", "h": "High", "c": "Crucial"}
+PRIORITIES = {"o": "Optional", "l": "Low", "m": "Medium", "h": "High", "c": "Crucial"}
 
 # List of all priority keys and priority names
 PRIORITIES_LIST = list(PRIORITIES.keys()) + list(PRIORITIES.values())
