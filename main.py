@@ -1,7 +1,9 @@
-
 import click
 import warnings
-warnings.filterwarnings("ignore", category=DeprecationWarning, module="pyreadline.py3k_compat")
+
+warnings.filterwarnings(
+    "ignore", category=DeprecationWarning, module="pyreadline.py3k_compat"
+)
 
 # Dictionary mapping priority keys to priority names
 PRIORITIES = {"o": "Optional", "l": "Low", "m": "Medium", "h": "High", "c": "Crucial"}
@@ -13,7 +15,7 @@ PRIORITIES_LIST = list(PRIORITIES.keys()) + list(PRIORITIES.values())
 DEFAULT_FILE = "mytodos.txt"
 
 
-@click.command()
+@click.command(name="add_todo")
 @click.argument("priority", type=click.Choice(PRIORITIES_LIST), default="m")
 @click.argument("todofile", type=click.Path(exists=False), required=False)
 @click.option("-n", "--name", prompt="Enter the todo name", help="The name of the todo")
@@ -30,29 +32,10 @@ def add_todo(name, desc, priority, todofile):
     """
     filename = todofile if todofile is not None else DEFAULT_FILE
     with open(filename, "a+", encoding="utf-8") as f:
-        f.write(f"{name}: {desc} [Priority: {PRIORITIES[priority]}]")
+        f.write(f"{name}: {desc} [Priority: {PRIORITIES[priority]}]\n")
 
 
-@click.command()
-@click.argument("priority", type=click.Choice(PRIORITIES.keys()), default="m")
-@click.argument("todofile", type=click.Path(exists=False), required=False)
-def list_todos(priority, todofile):
-    """
-    List all the todos in the file, optionally filtering by priority.
-    :param priority: priority to filter by, defaults to 'Medium'
-    :param todofile: file to read the todos from, defaults to 'mytodos.txt'
-    """
-    filename = todofile if todofile is not None else DEFAULT_FILE
-    with open(filename, "r", encoding="utf-8") as f:
-        todo_list = f.read().splitlines()
-    filter_str = "" if priority is None else f"[Priority: {PRIORITIES[priority]}]"
-    out_list = [
-        f"({i}) - {todo}" for i, todo in enumerate(todo_list) if filter_str in todo
-    ]
-    click.echo("\n".join(out_list))
-
-
-@click.command()
+@click.command(name="delete_todos")
 @click.argument(
     "indexes",
     type=int,
@@ -86,9 +69,33 @@ def delete_todos(indexes, todofile):
         f.write("\n".join(todo_list))
 
 
+@click.command(name="list_todos")
+@click.argument("priority", type=click.Choice(PRIORITIES_LIST + [""]), default="")
+@click.argument("todofile", type=click.Path(exists=False), required=False)
+def list_todos(priority, todofile):
+    """
+    List all the todos in the file, optionally filtering by priority.
+    :param priority: priority to filter by, defaults to '' in order to list all todos when not passed
+    :param todofile: file to read the todos from, defaults to 'mytodos.txt'
+    """
+    filename = todofile if todofile is not None else DEFAULT_FILE
+    with open(filename, "r", encoding="utf-8") as f:
+        todo_list = f.read().splitlines()
+    filter_str = "" if priority == "" else f"[Priority: {PRIORITIES[priority]}]"
+    out_list = [
+        f"({i}) - {todo}" for i, todo in enumerate(todo_list) if filter_str in todo
+    ]
+    click.echo("\n".join(out_list))
 
-commands = [add_todo, delete_todos, list_todos]
-cli = click.CommandCollection(sources=commands)
+
+@click.group()
+def cli():
+    pass
+
+
+cli.add_command(add_todo)
+cli.add_command(delete_todos)
+cli.add_command(list_todos)
 
 if __name__ == "__main__":
     cli()
