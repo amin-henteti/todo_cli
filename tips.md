@@ -150,6 +150,14 @@ After creating the tag, you can push it to the remote repository using:
 git push origin <tag_name>
 ```
 
+To add a message to a tag that already exists:
+```bash
+git tag -f v1.0 -m "This is a new message for tag v1.0"
+```
+This will update the tag v1.0 with the new message. 
+
+Note that using the -f flag can be dangerous as it overwrites the existing tag with the same name, so use it with caution.
+
 ## install tree
 tree command is not included by default in Git Bash, but you can install it using the following steps:
 
