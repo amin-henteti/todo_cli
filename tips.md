@@ -158,6 +158,64 @@ This will update the tag v1.0 with the new message.
 
 Note that using the -f flag can be dangerous as it overwrites the existing tag with the same name, so use it with caution.
 
+## make Release in github
+To make automatic releases using Jenkins, you can use a Jenkins job that is triggered by a Git webhook. The Jenkins job can then perform the following steps:
+
+1. Clone the Git repository.
+2. Build the Python package.
+3. Create a release tag in Git with the package version.
+4. Create a release on GitHub with the same release tag.
+5. Upload the package to PyPI.
+Here is an example Jenkinsfile that performs these steps:
+
+```jenkins
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'python setup.py sdist bdist_wheel'
+            }
+        }
+
+        stage('Create tag') {
+            steps {
+                sh "git tag $(python setup.py --version)"
+                sh "git push origin $(python setup.py --version)"
+            }
+        }
+
+        stage('Create GitHub release') {
+            steps {
+                withCredentials([string(credentialsId: 'github_token', variable: 'GITHUB_TOKEN')]) {
+                    sh "curl -H 'Authorization: token ${GITHUB_TOKEN}' -X POST https://api.github.com/repos/<owner>/<repo>/releases -d '{\"tag_name\":\"$(python setup.py --version)\"}'"
+                }
+            }
+        }
+
+        stage('Upload to PyPI') {
+            steps {
+                withCredentials([string(credentialsId: 'pypi_credentials', variable: 'PYPI_CREDENTIALS')]) {
+                    sh "twine upload -u __token__ -p ${PYPI_CREDENTIALS} dist/*"
+                }
+            }
+        }
+    }
+}
+```
+This Jenkinsfile assumes that you have defined two credentials in Jenkins: 
+    * **github_token**: should contain a personal access token with the repo scope
+    * **pypi_credentials**: should contain the username and password for your PyPI account.
+
+To use this Jenkinsfile, you can create a new Pipeline job in Jenkins and select "``Pipeline script from SCM``" as the ``Pipeline`` definition. Then, configure the job to use your Git repository and select "``GitHub hook trigger for GITScm polling``" as the **Build Trigger**. Finally, configure the owner and repo variables in the Create GitHub release stage to match your GitHub repository.
+
 ## install tree
 tree command is not included by default in Git Bash, but you can install it using the following steps:
 
